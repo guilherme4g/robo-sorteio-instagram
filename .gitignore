@@ -1,0 +1,5 @@
+node_modules/
+credentials.json
+usuarios.json
+sorteio.json
+config.json
