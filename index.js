@@ -33,16 +33,19 @@ const comment = async (link, textComment , quantTagInstagramProfiles) => {
             executablePath: '/usr/bin/google-chrome-stable',
             defaultViewport: null
         });
+
         const page = await browser.newPage();
         await page.setDefaultNavigationTimeout(60000);
         await page.goto(link);
+
         await page.click('a.tdiEy');
         await page.waitForSelector("form.HmktE");   
         await page.type("input[name='username']",LOGIN_INSTAGRAM, { delay: 567 });
         await page.type("input[name='password']",SENHA_INSTAGRAM, { delay: 434 });
         await page.click("button[type='submit']");
+
         await page.waitForSelector("section.ABCxa");   
-        await page.click("button.sqdOP");   
+        await page.click("button.sqdOP");  
         const quant = 7;
         for (let i = 0; i < quant; i++) {
             let pos = randomInt(0,profiles.length);
@@ -67,7 +70,9 @@ const comment = async (link, textComment , quantTagInstagramProfiles) => {
 
 const commentForever = async () => {
     while(true){
-      await comment('https://www.instagram.com/p/CGV4iJbgy6Q/', "", 1);
+      await comment('https://www.instagram.com/p/CGV4iJbgy6Q/', "", 1).catch((error) => {
+        console.log(error);
+      });
     }
 }
 
