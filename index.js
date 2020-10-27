@@ -30,7 +30,6 @@ const comment = async (link, textComment , quantTagInstagramProfiles) => {
         browser = await puppeteer.launch({
             headless: false, 
             args: ['--start-maximized'] ,
-            executablePath: '/usr/bin/google-chrome-stable',
             defaultViewport: null
         });
 
