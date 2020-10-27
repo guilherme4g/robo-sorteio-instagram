@@ -34,7 +34,7 @@ const comment = async (link, textComment , quantTagInstagramProfiles) => {
         });
 
         const page = await browser.newPage();
-        await page.setDefaultNavigationTimeout(60000);
+        page.setDefaultNavigationTimeout(60000);
         await page.goto(link);
 
         await page.click('a.tdiEy');
@@ -42,14 +42,17 @@ const comment = async (link, textComment , quantTagInstagramProfiles) => {
         await page.type("input[name='username']",LOGIN_INSTAGRAM, { delay: 567 });
         await page.type("input[name='password']",SENHA_INSTAGRAM, { delay: 434 });
         await page.click("button[type='submit']");
+        await page.waitForSelector("section.ABCxa");
+        await page.click("button.sqdOP"); 
+        await page.waitForSelector("form.X7cDz");
 
-        await page.waitForSelector("section.ABCxa");   
-        await page.click("button.sqdOP");  
-        const quant = 7;
+        const currentUrl = page.url();
+        if(!link.includes(currentUrl)) throw Error("Instagram redirecionou de forma incorreta");
+
+        const quant = randomInt(5, 7);
         for (let i = 0; i < quant; i++) {
             let pos = randomInt(0,profiles.length);
             await page.waitFor(randomInt(30678, 35678));
-            await page.waitForSelector("form.X7cDz");   
             let comentario = textComment;
             for (let j = 0; j < quantTagInstagramProfiles; j++) {
                 comentario += " @" + profiles[pos + j].ig;   
@@ -69,9 +72,7 @@ const comment = async (link, textComment , quantTagInstagramProfiles) => {
 
 const commentForever = async () => {
     while(true){
-      await comment('https://www.instagram.com/p/CGV4iJbgy6Q/', "", 1).catch((error) => {
-        console.log(error);
-      });
+      await comment('https://www.instagram.com/p/CGV4iJbgy6Q/', "", 1);
     }
 }
 
